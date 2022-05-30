@@ -129,5 +129,41 @@ A segunda grande parte do algoritmo é focado na função ```trocaRegioes()```, 
 <img src="imgs/maui_shifted.png" alt="Imagem com Regiões Trocadas" width="600"/>
 </div>
 <div align="center">
-<figcaption>Imagem com cores invertidas e em tons de cinza</figcaption>
+<figcaption>Imagem com as regiões trocadas e em tons de cinza</figcaption>
 </div>
+
+## 2. Rotulação de Objetos usando Floodfill
+
+<div align="center">
+<img src="imgs/bolhas.png" alt="Bolhas"/>
+</div>
+
+```python
+from turtle import color
+import numpy as np
+import cv2 as cv
+
+img = cv.imread("imgs/bolhas.png", 0)
+
+floodfil = img.copy()
+
+h, w = img.shape[:2]
+mask = np.zeros((h+2, w+2), np.uint8)
+
+colorToFill = 1
+for i in range (0, h):
+    for j in range(0, w):
+        if (img.item(i, j) == 255):
+            cv.floodFill(floodfil, mask, (j,i), colorToFill)
+            if (img.item(i+1, j+1) == colorToFill):
+                colorToFill += 1
+
+cv.imshow('Mask', mask)
+cv.imshow('Original', img)
+cv.imshow('FloodFill', floodfill)
+
+cv.waitKey()
+
+cv.destroyAllWindows()
+
+```
