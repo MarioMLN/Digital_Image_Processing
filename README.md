@@ -145,16 +145,21 @@ import cv2 as cv
 
 img = cv.imread("imgs/bolhas.png", 0)
 
-floodfil = img.copy()
+floodfill = img.copy()
 
 h, w = img.shape[:2]
 mask = np.zeros((h+2, w+2), np.uint8)
+
+```
+Após carregar as bibliotecas necessárias, a imagem bolhas.png é lida e copiada para a variável floodfill. Após isso, uma máscara é feita para varrer a imagem original.
+
+```python
 
 colorToFill = 1
 for i in range (0, h):
     for j in range(0, w):
         if (img.item(i, j) == 255):
-            cv.floodFill(floodfil, mask, (j,i), colorToFill)
+            cv.floodFill(floodfill, mask, (j,i), colorToFill)
             if (img.item(i+1, j+1) == colorToFill):
                 colorToFill += 1
 
@@ -165,5 +170,6 @@ cv.imshow('FloodFill', floodfill)
 cv.waitKey()
 
 cv.destroyAllWindows()
-
 ```
+
+A máscara criada serve como um dos parâmetros para a função ```floodFill()``` e utiliza os loopings para varrer toda a figura para detectar a bolhas na figura.
